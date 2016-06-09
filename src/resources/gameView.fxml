@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import cards.card.HandControl?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.control.GridView?>
+<SplitPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="cards.game.GameController" fx:id="mainPane">
+    <VBox>
+        <children>
+            <BorderPane fx:id="gamePane" style="-fx-background-color: rgb(71,147,72);" VBox.vgrow="ALWAYS">
+                <bottom>
+                    <VBox alignment="CENTER">
+                        <children>
+                            <HandControl fx:id="hand"/>
+                            <Button text="Confirm" fx:id="confirmButton" onAction="#sendAnswerCards"
+                                    visible="false" disable="true" alignment="CENTER"/>
+                        </children>
+                    </VBox>
+                </bottom>
+                <top>
+                    <GridView fx:id="playerDisplay" prefHeight="100" BorderPane.alignment="CENTER"/>
+                </top>
+            </BorderPane>
+            <Label fx:id="hostLabel" text="hi"/>
+        </children>
+    </VBox>
+</SplitPane>

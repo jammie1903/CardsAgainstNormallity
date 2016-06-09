@@ -1,0 +1,7 @@
+.HBox{
+    -fx-border-width: 30;
+}
+
+.HBox:selected{
+    -fx-border-width: 10;
+}

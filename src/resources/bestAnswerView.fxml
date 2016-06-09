@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root alignment="CENTER" spacing="10.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox HBox.hgrow="NEVER">
+           <children>
+               <Label text="Winner">
+                   <font>
+                       <Font name="System Bold" size="24.0" />
+                   </font>
+               </Label>
+               <Label fx:id="nameLabel" text="">
+                   <font>
+                       <Font name="System Bold" size="24.0" />
+                   </font>
+               </Label>
+            <Button fx:id="continueButton" onAction="#continueGame" text="Continue" />
+           </children>
+        </VBox>
+        <VBox fx:id="cardHolder" />
+    </children>
+    <padding>
+        <Insets bottom="4.0" left="6.0" right="6.0" top="4.0" />
+    </padding>
+</fx:root>

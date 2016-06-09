@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane minWidth="200" prefWidth="250" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cards.messenger.MessengerController">
+    <bottom>
+        <HBox spacing="4">
+           <children>
+               <TextField fx:id="input" onAction="#sendMessage" HBox.hgrow="ALWAYS" />
+               <Button minWidth="60" onAction="#sendMessage" text="Send" HBox.hgrow="ALWAYS" />
+           </children>
+        </HBox>
+    </bottom>
+   <center>
+      <ListView fx:id="textPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root alignment="CENTER" prefWidth="140" spacing="4.0" style="-fx-border-color: darkgray; -fx-border-width: 2; -fx-border-radius: 6; -fx-background-color: white; -fx-background-radius: 6;" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox HBox.hgrow="ALWAYS">
+            <children>
+                <Label fx:id="nameLabel" text="name">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <HBox>
+                    <children>
+                        <Label text="Points: " />
+                        <Label fx:id="pointsLabel" text="0" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <ImageView fx:id="cardPlayedDisplay" fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@cardPlayed.png" />
+            </image>
+        </ImageView>
+    </children>
+    <padding>
+        <Insets bottom="4.0" left="6.0" right="6.0" top="4.0" />
+    </padding>
+</fx:root>

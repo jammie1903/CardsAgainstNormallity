@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.glyphfont.Glyph?>
+<?import org.controlsfx.glyphfont.FontAwesome?>
+<?import org.controlsfx.control.GridView?>
+<TabPane fx:controller="cards.card.deck.DeckController" tabClosingPolicy="UNAVAILABLE"
+         xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+  <Tab text="Questions">
+    <VBox prefHeight="200.0" prefWidth="100.0">
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" onAction="#addQuestion">
+          <graphic>
+            <Glyph fontFamily="FontAwesome" icon="PLUS"/>
+          </graphic>
+        </Button>
+      </ToolBar>
+      <GridView fx:id="questionsPane" cellWidth="135" cellHeight="195" horizontalCellSpacing="10" verticalCellSpacing="10"/>
+    </VBox>
+  </Tab>
+  <Tab text="Answers">
+    <VBox prefHeight="200.0" prefWidth="100.0">
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" onAction="#addAnswer">
+          <graphic>
+            <Glyph fontFamily="FontAwesome" icon="PLUS"/>
+          </graphic>
+        </Button>
+      </ToolBar>
+      <GridView fx:id="answersPane" cellWidth="135" cellHeight="195" horizontalCellSpacing="10" verticalCellSpacing="10"/>
+    </VBox>
+  </Tab>
+</TabPane>
