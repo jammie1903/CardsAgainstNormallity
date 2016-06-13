@@ -2,6 +2,7 @@ package cards;
 
 import cards.bean.HostDetails;
 import cards.communication.Connection;
+import cards.data.CardData;
 import cards.data.DataHandler;
 import cards.game.GameController;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -67,6 +69,8 @@ public class InitialController implements Initializable {
             String hostName = Connection.initialiseAsHost();
             controller.setHostName(hostName);
             controller.initialiseAsHost();
+            CardData.loadAnswerDeck(DataHandler.getInstance().getAnswers());
+            CardData.loadQuestionDeck(DataHandler.getInstance().getQuestions());
             Scene scene = new Scene(gameView, 800, 600);
             scene.getStylesheets().add("/cards.css");
             stage.setScene(scene);
@@ -74,7 +78,7 @@ public class InitialController implements Initializable {
     }
 
     public boolean setName() {
-        if (nameField.getText().isEmpty()) {
+        if (nameField.getText() == null || nameField.getText().isEmpty()) {
             return false;
         }
         DataHandler.getInstance().setName(nameField.getText());
@@ -107,6 +111,11 @@ public class InitialController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/deckView.fxml"));
         Parent deckView = loader.load();
         Stage stage = new Stage();
+        stage.setTitle("Deck Editor");
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/card.png")));
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/card_small.png")));
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/card_smallest.png")));
+
         stage.setScene(new Scene(deckView, 800, 600));
         stage.initOwner(this.stage);
         stage.initModality(Modality.WINDOW_MODAL);

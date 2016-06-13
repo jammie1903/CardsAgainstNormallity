@@ -6,11 +6,11 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
-public class CardSelectedTransition extends Transition {
+public class AnswerSelectedTransition extends Transition {
 
         private Node card;
 
-        public CardSelectedTransition(Node card) {
+        public AnswerSelectedTransition(Node card) {
             setCycleDuration(Duration.seconds(0.5));
             this.card = card;
         }

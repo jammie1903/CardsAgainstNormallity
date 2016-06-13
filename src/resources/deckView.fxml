@@ -17,7 +17,7 @@
           </graphic>
         </Button>
       </ToolBar>
-      <GridView fx:id="questionsPane" cellWidth="135" cellHeight="195" horizontalCellSpacing="10" verticalCellSpacing="10"/>
+      <GridView fx:id="questionsPane" VBox.vgrow="ALWAYS" cellWidth="135" cellHeight="195" horizontalCellSpacing="10" verticalCellSpacing="10"/>
     </VBox>
   </Tab>
   <Tab text="Answers">
@@ -30,7 +30,7 @@
           </graphic>
         </Button>
       </ToolBar>
-      <GridView fx:id="answersPane" cellWidth="135" cellHeight="195" horizontalCellSpacing="10" verticalCellSpacing="10"/>
+      <GridView fx:id="answersPane" VBox.vgrow="ALWAYS" cellWidth="135" cellHeight="195" horizontalCellSpacing="10" verticalCellSpacing="10"/>
     </VBox>
   </Tab>
 </TabPane>

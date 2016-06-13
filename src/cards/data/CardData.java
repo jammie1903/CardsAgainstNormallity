@@ -1,8 +1,6 @@
 package cards.data;
 
-import java.util.ArrayDeque;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class CardData {
     private Queue<String> questionDeck = new ArrayDeque<>();
@@ -20,7 +18,14 @@ public class CardData {
                     instance.questionDeck.add(question);
                 }
             });
+            instance.questionDeck = shuffle(instance.questionDeck);
         }
+    }
+
+    private static <T> Queue<T> shuffle(Queue<T> queue) {
+        List<T> tempList = new ArrayList<>(queue);
+        Collections.shuffle(tempList);
+        return new ArrayDeque<>(tempList);
     }
 
     public static void loadAnswerDeck(List<String> answers) {
@@ -30,6 +35,7 @@ public class CardData {
                     instance.answerDeck.add(answer);
                 }
             });
+            instance.answerDeck = shuffle(instance.answerDeck);
         }
     }
 
@@ -43,13 +49,5 @@ public class CardData {
         String answer = instance.answerDeck.remove();
         instance.answerDeck.offer(answer);
         return answer;
-    }
-
-    public static void returnCardToQuestionDeck(String question) {
-        instance.questionDeck.add(question);
-    }
-
-    public static void returnCardToAnswerDeck(String answer) {
-        instance.answerDeck.add(answer);
     }
 }

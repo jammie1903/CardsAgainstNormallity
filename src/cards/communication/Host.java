@@ -24,7 +24,7 @@ public class Host implements Communicator {
         private BufferedReader in;
 
         private ClientData(Socket clientSocket) throws IOException {
-            this.id = highestId++;
+            this.id = ++highestId;
             this.clientSocket = clientSocket;
             this.out = new PrintWriter(clientSocket.getOutputStream(), true);
             this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

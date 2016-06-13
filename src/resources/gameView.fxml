@@ -22,7 +22,7 @@
                     </VBox>
                 </bottom>
                 <top>
-                    <GridView fx:id="playerDisplay" prefHeight="100" BorderPane.alignment="CENTER"/>
+                    <GridView fx:id="playerDisplay" prefHeight="130" BorderPane.alignment="CENTER"/>
                 </top>
             </BorderPane>
             <Label fx:id="hostLabel" text="hi"/>

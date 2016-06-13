@@ -1,15 +1,17 @@
 package cards.messenger;
 
-import cards.data.PlayerData;
 import cards.communication.Connection;
 import cards.communication.MessageHandler;
+import cards.data.PlayerData;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,12 +19,11 @@ import java.util.ResourceBundle;
 public class MessengerController implements MessageHandler, Initializable {
 
     @FXML
-    public ListView<Message> textPane;
+    private ListView<Message> textPane;
+    @FXML
+    private ToolBar chatPaneHeader;
     @FXML
     private TextField input;
-
-
-  //  private String name;
 
     private static class Message {
         private int senderId;
@@ -56,6 +57,14 @@ public class MessengerController implements MessageHandler, Initializable {
             cell.prefWidthProperty().bind(listView.widthProperty().subtract(19));
             return cell;
         });
+        ChangeListener<Boolean> x = (observable, oldValue, newValue) -> {
+            if (newValue) {
+                chatPaneHeader.setStyle("");
+            }
+        };
+        chatPaneHeader.focusedProperty().addListener(x);
+        textPane.focusedProperty().addListener(x);
+        input.focusedProperty().addListener(x);
     }
 
     public void sendMessage(ActionEvent actionEvent) {
@@ -75,6 +84,9 @@ public class MessengerController implements MessageHandler, Initializable {
                 Platform.runLater(() -> {
                     textPane.getItems().add(new Message(clientId, message));
                     textPane.scrollTo(textPane.getItems().size() - 1);
+                    if (!textPane.isFocused() && !input.isFocused() && !chatPaneHeader.isFocused()) {
+                        chatPaneHeader.setStyle("-fx-base: teal");
+                    }
                 });
                 if (Connection.get().isHost()) {
                     Connection.get().forwardMessage(clientId, "MESSAGE:" + message);

@@ -1,13 +1,16 @@
 package cards.card;
 
+import cards.card.transition.AnswerSelectedTransition;
 import cards.card.transition.CardFlippedTransition;
-import cards.card.transition.CardSelectedTransition;
+import cards.card.transition.QuestionSelectedTransition;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point3D;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Glow;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -22,11 +25,13 @@ import java.util.stream.Collectors;
 
 public class CardControl extends StackPane {
 
+    private boolean questionCard;
     public Label selectionOrderLabel;
     private IntegerProperty selectionOrder = new SimpleIntegerProperty();
     @FXML
     private TextFlow cardText;
-    private CardSelectedTransition selectedTransition = new CardSelectedTransition(this);
+    private AnswerSelectedTransition answerSelectedTransition = new AnswerSelectedTransition(this);
+    private QuestionSelectedTransition questionSelectedTransition;
     private CardFlippedTransition flippedTransition = new CardFlippedTransition(this);
     private int playerId;
     private DoubleProperty maxTextHeight = new SimpleDoubleProperty(-1);
@@ -63,8 +68,13 @@ public class CardControl extends StackPane {
                 @Override
                 protected void invalidated() {
                     pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, get());
-                    selectedTransition.setRate(get() ? 1 : -1);
-                    selectedTransition.play();
+                    if (questionCard) {
+                        questionSelectedTransition.setRate(get() ? 1 : -1);
+                        questionSelectedTransition.play();
+                    } else {
+                        answerSelectedTransition.setRate(get() ? 1 : -1);
+                        answerSelectedTransition.play();
+                    }
                 }
 
                 @Override
@@ -88,12 +98,14 @@ public class CardControl extends StackPane {
 
     public CardControl(String cardText, boolean questionCard) {
         load();
+        this.questionCard = questionCard;
         setText(cardText);
         this.setStyle(this.getStyle() + " -fx-background-color: " + (questionCard ? "orange;" : "teal;"));
     }
 
     public CardControl(String cardText, String[] answerSegments) {
         load();
+        this.questionCard = true;
         setText(cardText, answerSegments);
         this.setStyle(this.getStyle() + " -fx-background-color: orange;");
     }
@@ -113,14 +125,20 @@ public class CardControl extends StackPane {
         this.cardText.visibleProperty().bind(rotateProperty().lessThan(90.0));
         selectionOrderLabel.textProperty().bind(selectionOrder.asString());
         selectionOrderLabel.visibleProperty().bind(selected.and(selectionOrder.greaterThan(0)));
-        maxTextHeight.bind(prefHeightProperty().subtract(this.getPadding().getTop() + this.getPadding().getBottom()));
-        this.cardText.heightProperty().addListener((observable, oldValue, newValue) -> {
+        maxTextHeight.bind(minHeightProperty().subtract(this.getPadding().getTop() + this.getPadding().getBottom() + START_FONT_WIDTH));
+
+        ChangeListener<Number> x = (observable, oldValue, newValue) -> {
             if (maxTextHeight.get() > 0 && newValue.doubleValue() > maxTextHeight.get()) {
                 fontSize--;
                 this.cardText.getChildren().stream().filter((c) -> c instanceof Text).map((c) -> (Text) c).forEach(
                         (text) -> text.setFont(getFont()));
             }
-        });
+        };
+        this.cardText.heightProperty().addListener(x);
+
+        Glow glow = new Glow(0.0);
+        setEffect(glow);
+        questionSelectedTransition = new QuestionSelectedTransition(glow);
     }
 
     public String getText() {
@@ -136,7 +154,6 @@ public class CardControl extends StackPane {
 
     public void setText(String cardText, String[] answers) {
         String[] textSegments = cardText.split("_+");
-        boolean endsWithAnswer = cardText.endsWith("_");
         this.cardText.getChildren().clear();
 
         for (int c = 0; c < textSegments.length || c < answers.length; c++) {
@@ -146,10 +163,9 @@ public class CardControl extends StackPane {
                 text.setFill(Color.WHITE);
                 this.cardText.getChildren().add(text);
             }
-            boolean cardTextExpired = c + (endsWithAnswer ? 0 : 1) == textSegments.length;
 
-            if (!cardTextExpired || c < answers.length) {
-                Text text = new Text((cardTextExpired ? "" : "\n") + (c < answers.length ? answers[c] : "???"));
+            if (c < answers.length) {
+                Text text = new Text((textSegments.length == 1 ? "\n" : "") + (c < answers.length ? answers[c] : "???"));
                 text.setFont(getFont());
                 text.setFill(Color.WHITE);
                 text.setUnderline(true);

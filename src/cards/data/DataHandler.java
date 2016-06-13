@@ -8,12 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.List;
 
 public class DataHandler {
 
-    private static final String XML_FILE = "data.xml";
+    private static final String XML_FILE = "cards_data.xml";
     private GameData gameData = null;
     private XStream xstream = getxStream();
 
@@ -24,8 +23,6 @@ public class DataHandler {
                 gameData = new GameData();
             } else {
                 this.gameData = (GameData) xstream.fromXML(eventStream);
-                CardData.loadAnswerDeck(gameData.getAnswers());
-                CardData.loadQuestionDeck(gameData.getQuestions());
             }
         } catch (IOException e) {
             gameData = new GameData();
@@ -60,7 +57,6 @@ public class DataHandler {
     public void addQuestionCard(String questionCard) {
         if (!gameData.getQuestions().contains(questionCard)) {
             gameData.getQuestions().add(questionCard);
-            CardData.loadQuestionDeck(Collections.singletonList(questionCard));
             updateDataFile();
         }
     }
@@ -68,7 +64,7 @@ public class DataHandler {
     public void addAnswerCard(String answerCard) {
         if (!gameData.getAnswers().contains(answerCard)) {
             gameData.getAnswers().add(answerCard);
-            CardData.loadAnswerDeck(Collections.singletonList(answerCard));
+
             updateDataFile();
         }
     }

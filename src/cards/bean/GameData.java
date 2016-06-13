@@ -24,14 +24,22 @@ public class GameData {
     }
 
     public List<String> getQuestions() {
+        if (questions == null) {
+            questions = new ArrayList<>();
+        }
         return questions;
     }
 
     public List<String> getAnswers() {
+        if (answers == null) {
+            answers = new ArrayList<>();
+        }
         return answers;
     }
 
-    public List<HostDetails> getHosts() {
+    public List<HostDetails> getHosts() {if (hosts == null) {
+        hosts = new ArrayList<>();
+    }
         return hosts;
     }
 

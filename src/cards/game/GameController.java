@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.effect.Glow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
@@ -117,6 +118,7 @@ public class GameController implements Initializable, MessageHandler {
 
     private void confirmBestAnswer(ActionEvent actionEvent) {
         if (answerHand.getSelectedCards().size() > 0) {
+            ((Glow) answerHand.getSelectedCards().get(0).getEffect()).setLevel(0.0);
             Player player = PlayerData.get(answerHand.getSelectedCards().get(0).getPlayerId());
             gamePane.setCenter(new BestAnswerControl(player, answerHand.getSelectedCards().get(0)));
             Connection.get().sendMessage("WINNER:" + player.getId());
